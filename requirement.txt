@@ -8,4 +8,3 @@ vaderSentiment
 wordcloud
 matplotlib
 langdetect
-transformers
