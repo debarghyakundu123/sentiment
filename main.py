@@ -50,13 +50,18 @@ except Exception:
 
 try:
     import nltk
-    # Ensure necessary NLTK packages are downloaded
-    nltk.data.find('tokenizers/punkt')
-    nltk.data.find('corpora/stopwords')
+    # --- FIX for LookupError in deployment environments ---
+    # Ensure necessary NLTK packages are downloaded before use
+    try:
+        nltk.data.find('tokenizers/punkt')
+        nltk.data.find('corpora/stopwords')
+    except:
+        nltk.download('punkt')
+        nltk.download('stopwords')
+
 except Exception:
-    import nltk
-    nltk.download('punkt')
-    nltk.download('stopwords')
+    # If NLTK itself fails to import
+    st.error("NLTK library failed to load. Tokenization will not work.")
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
